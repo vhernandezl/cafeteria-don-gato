@@ -4,61 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cafetería Don Gato</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #8B4513;
-            --secondary: #D2B48C;
-            --light: #F5F5DC;
-            --dark: #3C2415;
-            --accent: #FF9800;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --primary: #7E5A4E;
+            --secondary: #D4B8A0;
+            --light: #F5EDE3;
+            --dark: #3D2C23;
+            --accent: #C99D66;
         }
         
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--light);
             color: var(--dark);
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .navbar {
+            background-color: var(--dark);
         }
         
-        /* Header styles */
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 28px;
+        .navbar-brand {
+            color: var(--light);
             font-weight: bold;
+            font-size: 1.5rem;
         }
         
-        .logo i {
+        .navbar-brand img {
             margin-right: 10px;
         }
         
-        .cart-icon {
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--dark);
+            border-color: var(--dark);
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .category-title {
+            color: var(--primary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .navbar-cart-icon {
             position: relative;
-            cursor: pointer;
-            font-size: 24px;
+            color: var(--light);
+            font-size: 1.5rem;
         }
         
         .cart-count {
@@ -70,686 +83,566 @@
             border-radius: 50%;
             width: 20px;
             height: 20px;
+            font-size: 0.8rem;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 12px;
-        }
-        
-        /* Menu navigation */
-        .menu-nav {
-            background-color: var(--secondary);
-            padding: 10px 0;
-        }
-        
-        .menu-nav ul {
-            display: flex;
-            list-style: none;
             justify-content: center;
         }
         
-        .menu-nav li {
-            margin: 0 15px;
+        #cart-contents {
+            max-height: 300px;
+            overflow-y: auto;
         }
         
-        .menu-nav a {
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 8px 0;
         }
         
-        .menu-nav a:hover {
-            background-color: var(--primary);
+        .about-section {
+            background-color: var(--secondary);
+            padding: 60px 0;
+            margin-top: 30px;
+        }
+        
+        .footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+        
+        .payment-form label {
+            font-weight: 600;
+        }
+        
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
             color: white;
-        }
-        
-        /* Products section */
-        .menu-section {
-            padding: 40px 0;
-        }
-        
-        .section-title {
             text-align: center;
+            padding: 100px 0;
             margin-bottom: 30px;
-            color: var(--primary);
-            font-size: 32px;
         }
         
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
-        .product-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .product-img {
-            height: 180px;
-            width: 100%;
-            object-fit: cover;
-        }
-        
-        .product-info {
-            padding: 15px;
-        }
-        
-        .product-title {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .product-description {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 10px;
+        .cart-modal-dialog {
+            max-width: 600px;
         }
         
         .product-price {
             font-weight: bold;
             color: var(--primary);
-            font-size: 18px;
-            margin-bottom: 10px;
         }
         
-        .add-to-cart {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-        
-        .add-to-cart:hover {
-            background-color: var(--dark);
-        }
-        
-        /* Cart modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background-color: white;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #666;
-        }
-        
-        .modal-header {
-            padding: 20px;
-            background-color: var(--primary);
-            color: white;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-        
-        .modal-body {
-            padding: 20px;
-        }
-        
-        .cart-items {
-            margin-bottom: 20px;
-        }
-        
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .item-details {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .item-title {
-            font-weight: bold;
-        }
-        
-        .item-price {
-            color: var(--primary);
-        }
-        
-        .item-quantity {
-            display: flex;
-            align-items: center;
-        }
-        
-        .quantity-btn {
-            background-color: var(--secondary);
-            border: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        .quantity-text {
-            margin: 0 10px;
-        }
-        
-        .remove-item {
-            color: red;
-            cursor: pointer;
-        }
-        
-        .cart-total {
-            font-size: 20px;
-            font-weight: bold;
-            text-align: right;
-            margin-top: 20px;
-        }
-        
-        .checkout-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        
-        .checkout-btn:hover {
-            background-color: var(--dark);
-        }
-        
-        /* Payment form modal */
-        .payment-form {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        
-        .pay-btn {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-        
-        .pay-btn:hover {
-            background-color: #e08600;
-        }
-        
-        /* Success message */
-        .success-message {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .success-icon {
-            font-size: 48px;
-            color: green;
-            margin-bottom: 10px;
-        }
-        
-        /* Responsive styles */
+        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .menu-nav ul {
-                flex-direction: column;
-                align-items: center;
+            .hero-section {
+                padding: 60px 0;
             }
             
-            .menu-nav li {
-                margin: 5px 0;
+            .hero-section h1 {
+                font-size: 2rem;
             }
             
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            .card-img-top {
+                height: 160px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <i class="fas fa-cat"></i> Cafetería Don Gato
-            </div>
-            <div class="cart-icon" id="openCart">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count" id="cartCount">0</span>
-            </div>
-        </div>
-    </header>
-    
-    <nav class="menu-nav">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <ul>
-                <li><a href="#cafes">Cafés</a></li>
-                <li><a href="#postres">Postres</a></li>
-                <li><a href="#bebidas">Bebidas Frías</a></li>
-                <li><a href="#snacks">Snacks</a></li>
-            </ul>
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-cat"></i> Cafetería Don Gato
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cafe">Cafés</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#postres">Postres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#bebidas">Bebidas Frías</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#snacks">Snacks</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        <div class="navbar-cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cart-badge">0</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
-    
-    <main class="container">
-        <!-- Cafés Section -->
-        <section id="cafes" class="menu-section">
-            <h2 class="section-title">Cafés</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Espresso" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Espresso</h3>
-                        <p class="product-description">Café intenso y concentrado para los amantes del sabor fuerte.</p>
-                        <p class="product-price">$1.500</p>
-                        <button class="add-to-cart" data-id="cafe1" data-name="Espresso" data-price="1500">Añadir al Carrito</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Cappuccino" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Cappuccino</h3>
-                        <p class="product-description">Equilibrio perfecto entre espresso, leche y espuma cremosa.</p>
-                        <p class="product-price">$2.200</p>
-                        <button class="add-to-cart" data-id="cafe2" data-name="Cappuccino" data-price="2200">Añadir al Carrito</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Latte" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Latte</h3>
-                        <p class="product-description">Espresso con abundante leche cremosa y un toque de espuma.</p>
-                        <p class="product-price">$2.300</p>
-                        <button class="add-to-cart" data-id="cafe3" data-name="Latte" data-price="2300">Añadir al Carrito</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Moka" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Moka</h3>
-                        <p class="product-description">Deliciosa mezcla de café, chocolate y leche que endulzará tu día.</p>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>Bienvenido a Cafetería Don Gato</h1>
+            <p class="lead">Donde cada taza cuenta una historia</p>
+            <button class="btn btn-primary btn-lg" onclick="scrollToMenu()">Ver Menú</button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container" id="menu-section">
+        <!-- Coffee Section -->
+        <h2 class="category-title" id="cafe">Nuestros Cafés</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Café Americano">
+                    <div class="card-body">
+                        <h5 class="card-title">Café Americano</h5>
+                        <p class="card-text">Café espresso con agua caliente añadida. Intenso y aromático.</p>
                         <p class="product-price">$2.500</p>
-                        <button class="add-to-cart" data-id="cafe4" data-name="Moka" data-price="2500">Añadir al Carrito</button>
+                        <button class="btn btn-primary" onclick="addToCart('Café Americano', 2500)">Agregar al carrito</button>
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <!-- Postres Section -->
-        <section id="postres" class="menu-section">
-            <h2 class="section-title">Postres</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Cheesecake" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Cheesecake</h3>
-                        <p class="product-description">Suave pastel de queso con base de galleta y cobertura de frutos rojos.</p>
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Cappuccino">
+                    <div class="card-body">
+                        <h5 class="card-title">Cappuccino</h5>
+                        <p class="card-text">Mezcla perfecta de espresso, leche vaporizada y espuma de leche.</p>
                         <p class="product-price">$3.200</p>
-                        <button class="add-to-cart" data-id="postre1" data-name="Cheesecake" data-price="3200">Añadir al Carrito</button>
+                        <button class="btn btn-primary" onclick="addToCart('Cappuccino', 3200)">Agregar al carrito</button>
                     </div>
                 </div>
-                
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Brownie" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Brownie</h3>
-                        <p class="product-description">Clásico brownie de chocolate con nueces, ideal para los amantes del cacao.</p>
-                        <p class="product-price">$2.800</p>
-                        <button class="add-to-cart" data-id="postre2" data-name="Brownie" data-price="2800">Añadir al Carrito</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Tiramisú" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Tiramisú</h3>
-                        <p class="product-description">Postre italiano con capas de bizcocho empapado en café y crema de mascarpone.</p>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Latte">
+                    <div class="card-body">
+                        <h5 class="card-title">Latte</h5>
+                        <p class="card-text">Espresso con leche vaporizada y una fina capa de espuma.</p>
                         <p class="product-price">$3.500</p>
-                        <button class="add-to-cart" data-id="postre3" data-name="Tiramisú" data-price="3500">Añadir al Carrito</button>
+                        <button class="btn btn-primary" onclick="addToCart('Latte', 3500)">Agregar al carrito</button>
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <!-- Bebidas Frías Section -->
-        <section id="bebidas" class="menu-section">
-            <h2 class="section-title">Bebidas Frías</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Frappuccino" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Frappuccino</h3>
-                        <p class="product-description">Bebida refrescante de café batido con hielo y crema batida.</p>
-                        <p class="product-price">$3.000</p>
-                        <button class="add-to-cart" data-id="bebida1" data-name="Frappuccino" data-price="3000">Añadir al Carrito</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Limonada" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Limonada</h3>
-                        <p class="product-description">Refrescante limonada casera con un toque de menta.</p>
-                        <p class="product-price">$2.000</p>
-                        <button class="add-to-cart" data-id="bebida2" data-name="Limonada" data-price="2000">Añadir al Carrito</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Cold Brew" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Cold Brew</h3>
-                        <p class="product-description">Café preparado en frío durante 24 horas, suave y refrescante.</p>
-                        <p class="product-price">$2.700</p>
-                        <button class="add-to-cart" data-id="bebida3" data-name="Cold Brew" data-price="2700">Añadir al Carrito</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Snacks Section -->
-        <section id="snacks" class="menu-section">
-            <h2 class="section-title">Snacks</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Sandwich Club" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Sandwich Club</h3>
-                        <p class="product-description">Sandwich triple con pollo, tocino, huevo, tomate y lechuga.</p>
+        </div>
+
+        <!-- Desserts Section -->
+        <h2 class="category-title" id="postres">Postres</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Cheesecake">
+                    <div class="card-body">
+                        <h5 class="card-title">Cheesecake</h5>
+                        <p class="card-text">Delicioso cheesecake con frutos rojos y base de galleta.</p>
                         <p class="product-price">$4.200</p>
-                        <button class="add-to-cart" data-id="snack1" data-name="Sandwich Club" data-price="4200">Añadir al Carrito</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Croissant" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Croissant</h3>
-                        <p class="product-description">Auténtico croissant francés, ligero y con múltiples capas.</p>
-                        <p class="product-price">$1.800</p>
-                        <button class="add-to-cart" data-id="snack2" data-name="Croissant" data-price="1800">Añadir al Carrito</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="/api/placeholder/400/320" alt="Empanada" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">Empanada</h3>
-                        <p class="product-description">Empanada de pino tradicional, perfecta para acompañar tu café.</p>
-                        <p class="product-price">$2.500</p>
-                        <button class="add-to-cart" data-id="snack3" data-name="Empanada" data-price="2500">Añadir al Carrito</button>
+                        <button class="btn btn-primary" onclick="addToCart('Cheesecake', 4200)">Agregar al carrito</button>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-    
-    <!-- Cart Modal -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeCart">&times;</span>
-            <div class="modal-header">
-                <h2>Tu Carrito</h2>
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Tiramisu">
+                    <div class="card-body">
+                        <h5 class="card-title">Tiramisu</h5>
+                        <p class="card-text">Postre italiano con capas de bizcocho empapado en café y queso mascarpone.</p>
+                        <p class="product-price">$3.800</p>
+                        <button class="btn btn-primary" onclick="addToCart('Tiramisu', 3800)">Agregar al carrito</button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="cart-items" id="cartItems">
-                    <!-- Cart items will be dynamically added here -->
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Brownie con Helado">
+                    <div class="card-body">
+                        <h5 class="card-title">Brownie con Helado</h5>
+                        <p class="card-text">Brownie tibio con helado de vainilla y salsa de chocolate.</p>
+                        <p class="product-price">$4.500</p>
+                        <button class="btn btn-primary" onclick="addToCart('Brownie con Helado', 4500)">Agregar al carrito</button>
+                    </div>
                 </div>
-                <div class="cart-total">
-                    Total: <span id="cartTotal">$0</span>
-                </div>
-                <button class="checkout-btn" id="checkoutBtn">Proceder al Pago</button>
             </div>
         </div>
-    </div>
-    
-    <!-- Payment Modal -->
-    <div class="modal" id="paymentModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closePayment">&times;</span>
-            <div class="modal-header">
-                <h2>Pago</h2>
+
+        <!-- Cold Drinks Section -->
+        <h2 class="category-title" id="bebidas">Bebidas Frías</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Frappuccino">
+                    <div class="card-body">
+                        <h5 class="card-title">Frappuccino</h5>
+                        <p class="card-text">Café helado, leche, hielo y crema batida. Refrescante y delicioso.</p>
+                        <p class="product-price">$3.900</p>
+                        <button class="btn btn-primary" onclick="addToCart('Frappuccino', 3900)">Agregar al carrito</button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form class="payment-form" id="paymentForm">
-                    <div class="form-group">
-                        <label for="cardName">Nombre en la tarjeta</label>
-                        <input type="text" id="cardName" required>
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Limonada">
+                    <div class="card-body">
+                        <h5 class="card-title">Limonada</h5>
+                        <p class="card-text">Limonada fresca con hierbabuena y jengibre.</p>
+                        <p class="product-price">$2.900</p>
+                        <button class="btn btn-primary" onclick="addToCart('Limonada', 2900)">Agregar al carrito</button>
                     </div>
-                    <div class="form-group">
-                        <label for="cardNumber">Número de tarjeta</label>
-                        <input type="text" id="cardNumber" placeholder="XXXX XXXX XXXX XXXX" required>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Cold Brew">
+                    <div class="card-body">
+                        <h5 class="card-title">Cold Brew</h5>
+                        <p class="card-text">Café de filtración en frío, suave y con menos acidez.</p>
+                        <p class="product-price">$3.700</p>
+                        <button class="btn btn-primary" onclick="addToCart('Cold Brew', 3700)">Agregar al carrito</button>
                     </div>
-                    <div class="form-group">
-                        <label for="cardExpiry">Fecha de vencimiento</label>
-                        <input type="text" id="cardExpiry" placeholder="MM/AA" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cardCVV">CVV</label>
-                        <input type="text" id="cardCVV" placeholder="XXX" required>
-                    </div>
-                    <button type="submit" class="pay-btn">Pagar <span id="paymentTotal">$0</span></button>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Success Modal -->
-    <div class="modal" id="successModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>¡Pago Exitoso!</h2>
-            </div>
-            <div class="modal-body">
-                <div class="success-message">
-                    <div class="success-icon">
-                        <i class="fas fa-check-circle"></i>
+
+        <!-- Snacks Section -->
+        <h2 class="category-title" id="snacks">Snacks</h2>
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Sandwich de Pavo">
+                    <div class="card-body">
+                        <h5 class="card-title">Sandwich de Pavo</h5>
+                        <p class="card-text">Pan de masa madre, pavo, queso, lechuga y mayonesa casera.</p>
+                        <p class="product-price">$5.200</p>
+                        <button class="btn btn-primary" onclick="addToCart('Sandwich de Pavo', 5200)">Agregar al carrito</button>
                     </div>
-                    <h3>Gracias por tu compra</h3>
-                    <p>Tu pedido ha sido procesado correctamente.</p>
-                    <button class="checkout-btn" id="closeSuccess">Continuar</button>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Croissant">
+                    <div class="card-body">
+                        <h5 class="card-title">Croissant</h5>
+                        <p class="card-text">Croissant francés tradicional, hojaldrado y mantequilloso.</p>
+                        <p class="product-price">$2.800</p>
+                        <button class="btn btn-primary" onclick="addToCart('Croissant', 2800)">Agregar al carrito</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="card">
+                    <img src="/api/placeholder/400/300" class="card-img-top" alt="Empanada de Queso">
+                    <div class="card-body">
+                        <h5 class="card-title">Empanada de Queso</h5>
+                        <p class="card-text">Empanada horneada rellena de queso fundido.</p>
+                        <p class="product-price">$2.300</p>
+                        <button class="btn btn-primary" onclick="addToCart('Empanada de Queso', 2300)">Agregar al carrito</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog cart-modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Carrito de Compras</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="empty-cart-message">
+                        <p>Tu carrito está vacío. ¡Agrega algunos productos!</p>
+                    </div>
+                    <div id="cart-contents"></div>
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-between">
+                            <h5>Total:</h5>
+                            <h5 id="cart-total">$0</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir Comprando</button>
+                    <button type="button" class="btn btn-primary" id="checkout-btn" onclick="showPaymentForm()">Proceder al Pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Datos de Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="payment-form" class="payment-form">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="card-number" class="form-label">Número de Tarjeta</label>
+                            <input type="text" class="form-control" id="card-number" placeholder="XXXX XXXX XXXX XXXX" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="expiry" class="form-label">Fecha de Vencimiento</label>
+                                <input type="text" class="form-control" id="expiry" placeholder="MM/AA" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Dirección de Entrega</label>
+                            <input type="text" class="form-control" id="address" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="processPayment()">Pagar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">¡Pago Exitoso!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                        <h4 class="mt-3">Gracias por tu compra</h4>
+                        <p>Tu pedido ha sido recibido y será preparado pronto.</p>
+                        <p>Número de pedido: <span id="order-number"></span></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="finishOrder()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Cafetería Don Gato</h5>
+                    <p>Donde cada taza cuenta una historia. Ven y disfruta de nuestros deliciosos productos.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Horario</h5>
+                    <p>Lunes a Viernes: 8:00 AM - 8:00 PM</p>
+                    <p>Sábados y Domingos: 9:00 AM - 6:00 PM</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contáctanos</h5>
+                    <p><i class="fas fa-map-marker-alt"></i> Av. Siempre Viva 123, Springfield</p>
+                    <p><i class="fas fa-phone"></i> +56 9 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@cafeteriadongato.com</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col text-center">
+                    <p>&copy; 2025 Cafetería Don Gato. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Cart data
-            let cart = [];
-            const cartCount = document.getElementById('cartCount');
-            const cartItems = document.getElementById('cartItems');
-            const cartTotal = document.getElementById('cartTotal');
-            const paymentTotal = document.getElementById('paymentTotal');
+        // Cart functionality
+        let cart = [];
+        let cartTotal = 0;
+
+        function addToCart(productName, price) {
+            // Check if product already exists in cart
+            const existingProduct = cart.find(item => item.name === productName);
             
-            // Modals
-            const cartModal = document.getElementById('cartModal');
-            const paymentModal = document.getElementById('paymentModal');
-            const successModal = document.getElementById('successModal');
-            
-            // Buttons
-            const openCartBtn = document.getElementById('openCart');
-            const closeCartBtn = document.getElementById('closeCart');
-            const checkoutBtn = document.getElementById('checkoutBtn');
-            const closePaymentBtn = document.getElementById('closePayment');
-            const closeSuccessBtn = document.getElementById('closeSuccess');
-            const paymentForm = document.getElementById('paymentForm');
-            
-            // Add product to cart
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = this.dataset.id;
-                    const name = this.dataset.name;
-                    const price = parseInt(this.dataset.price);
-                    
-                    // Check if product is already in cart
-                    const existingItem = cart.find(item => item.id === id);
-                    
-                    if (existingItem) {
-                        existingItem.quantity++;
-                    } else {
-                        cart.push({
-                            id: id,
-                            name: name,
-                            price: price,
-                            quantity: 1
-                        });
-                    }
-                    
-                    updateCart();
-                    
-                    // Show notification
-                    alert(`${name} agregado al carrito`);
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.push({
+                    name: productName,
+                    price: price,
+                    quantity: 1
                 });
-            });
-            
-            // Open cart modal
-            openCartBtn.addEventListener('click', function() {
-                updateCartDisplay();
-                cartModal.style.display = 'flex';
-            });
-            
-            // Close cart modal
-            closeCartBtn.addEventListener('click', function() {
-                cartModal.style.display = 'none';
-            });
-            
-            // Proceed to checkout
-            checkoutBtn.addEventListener('click', function() {
-                if (cart.length === 0) {
-                    alert('Tu carrito está vacío');
-                    return;
-                }
-                
-                cartModal.style.display = 'none';
-                updatePaymentTotal();
-                paymentModal.style.display = 'flex';
-            });
-            
-            // Close payment modal
-            closePaymentBtn.addEventListener('click', function() {
-                paymentModal.style.display = 'none';
-                cartModal.style.display = 'flex';
-            });
-            
-            // Submit payment
-            paymentForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Simulate payment processing
-                paymentModal.style.display = 'none';
-                successModal.style.display = 'flex';
-                
-                // Clear cart after successful payment
-                cart = [];
-                updateCart();
-            });
-            
-            // Close success modal
-            closeSuccessBtn.addEventListener('click', function() {
-                successModal.style.display = 'none';
-            });
-            
-            // Close modals when clicking outside
-            window.addEventListener('click', function(event) {
-                if (event.target === cartModal) {
-                    cartModal.style.display = 'none';
-                } else if (event.target === paymentModal) {
-                    paymentModal.style.display = 'none';
-                } else if (event.target === successModal) {
-                    successModal.style.display = 'none';
-                }
-            });
-            
-            // Update cart count and total
-            function updateCart() {
-                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-                cartCount.textContent = totalItems;
             }
             
-            // Update cart display in modal
-            function updateCartDisplay() {
-                cartItems.innerHTML = '';
+            updateCartTotal();
+            updateCartBadge();
+            updateCartDisplay();
+            
+            // Show toast notification
+            const toastContainer = document.createElement('div');
+            toastContainer.style.position = 'fixed';
+            toastContainer.style.bottom = '20px';
+            toastContainer.style.right = '20px';
+            toastContainer.style.zIndex = '9999';
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast show';
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            toast.innerHTML = `
+                <div class="toast-header">
+                    <strong class="me-auto">Cafetería Don Gato</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${productName} añadido al carrito.
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            document.body.appendChild(toastContainer);
+            
+            setTimeout(() => {
+                toastContainer.remove();
+            }, 3000);
+        }
+
+        function updateCartTotal() {
+            cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            document.getElementById('cart-total').textContent = `$${cartTotal.toLocaleString()}`;
+        }
+
+        function updateCartBadge() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-badge').textContent = totalItems;
+        }
+
+        function updateCartDisplay() {
+            const cartContents = document.getElementById('cart-contents');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartContents.innerHTML = '';
+                document.getElementById('checkout-btn').disabled = true;
+            } else {
+                emptyCartMessage.style.display = 'none';
+                document.getElementById('checkout-btn').disabled = false;
                 
-                if (cart.length === 0) {
-                    cartItems.innerHTML = '<p>Tu carrito está vacío</p>';
-                    cartTotal.textContent = '$0';
-                    return;
-                }
-                
-                let total = 0;
-                
-                cart.forEach(item => {
-                    const itemTotal = item.price * item.quantity;
-                    total += itemTotal;
-                    
+                cartContents.innerHTML = '';
+                cart.forEach((item, index) => {
                     const cartItem = document.createElement('div');
-                    cartItem.classList.add('cart-item');
+                    cartItem.className = 'cart-item d-flex justify-content-between align-items-center py-2';
+                    
                     cartItem.innerHTML = `
-                        <div class="item-details">
-                            <span class="item-title">${item.name}</span>
-                            <span class="item-price">$${item.price.toLocaleString()}</span>
+                        <div>
+                            <h6 class="mb-0">${item.name}</h6>
+                            <small>$${item.price.toLocaleString()} x ${item.quantity}</small>
                         </div>
-                        <div class="item-quantity">
-                            <button class="quantity-
+                        <div class="d-flex align-items-center">
+                            <span class="mx-2">$${(item.price * item.quantity).toLocaleString()}</span>
+                            <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    cartContents.appendChild(cartItem);
+                });
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartTotal();
+            updateCartBadge();
+            updateCartDisplay();
+        }
+
+        function showPaymentForm() {
+            const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+            cartModal.hide();
+            
+            const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+            paymentModal.show();
+        }
+
+        function processPayment() {
+            // Simple validation
+            const name = document.getElementById('name').value;
+            const cardNumber = document.getElementById('card-number').value;
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            
+            if (!name || !cardNumber || !expiry || !cvv) {
+                alert('Por favor complete todos los campos');
+                return;
+            }
+            
+            // Close payment modal
+            const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+            paymentModal.hide();
+            
+            // Generate random order number
+            const orderNumber = Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('order-number').textContent = orderNumber;
+            
+            // Show confirmation modal
+            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+            confirmationModal.show();
+        }
+
+        function finishOrder() {
+            // Reset cart
+            cart = [];
+            cartTotal = 0;
+            updateCartTotal();
+            updateCartBadge();
+            updateCartDisplay();
+            
+            // Close confirmation modal
+            const confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+            confirmationModal.hide();
+            
+            // Reset payment form
+            document.getElementById('payment-form').reset();
+        }
+
+        function scrollToMenu() {
+            document.getElementById('menu-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize
+        updateCartBadge();
+        updateCartDisplay();
+    </script>
+</body>
+</html>
