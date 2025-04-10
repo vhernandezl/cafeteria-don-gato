@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería Don Gato</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B4513;
+            --secondary: #D2B48C;
+            --light: #F5F5DC;
+            --dark: #3C2415;
+            --accent: #FF9800;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+        
+        /* Menu navigation */
+        .menu-nav {
+            background-color: var(--secondary);
+            padding: 10px 0;
+        }
+        
+        .menu-nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+        }
+        
+        .menu-nav li {
+            margin: 0 15px;
+        }
+        
+        .menu-nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .menu-nav a:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Products section */
+        .menu-section {
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+            font-size: 32px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--dark);
+        }
+        
+        /* Cart modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            background-color: var(--primary);
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .item-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .item-title {
+            font-weight: bold;
+        }
+        
+        .item-price {
+            color: var(--primary);
+        }
+        
+        .item-quantity {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            background-color: var(--secondary);
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .quantity-text {
+            margin: 0 10px;
+        }
+        
+        .remove-item {
+            color: red;
+            cursor: pointer;
+        }
+        
+        .cart-total {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+        
+        .checkout-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background-color: var(--dark);
+        }
+        
+        /* Payment form modal */
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .pay-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .pay-btn:hover {
+            background-color: #e08600;
+        }
+        
+        /* Success message */
+        .success-message {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .success-icon {
+            font-size: 48px;
+            color: green;
+            margin-bottom: 10px;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .menu-nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .menu-nav li {
+                margin: 5px 0;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-cat"></i> Cafetería Don Gato
+            </div>
+            <div class="cart-icon" id="openCart">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+    
+    <nav class="menu-nav">
+        <div class="container">
+            <ul>
+                <li><a href="#cafes">Cafés</a></li>
+                <li><a href="#postres">Postres</a></li>
+                <li><a href="#bebidas">Bebidas Frías</a></li>
+                <li><a href="#snacks">Snacks</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <!-- Cafés Section -->
+        <section id="cafes" class="menu-section">
+            <h2 class="section-title">Cafés</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Espresso" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Espresso</h3>
+                        <p class="product-description">Café intenso y concentrado para los amantes del sabor fuerte.</p>
+                        <p class="product-price">$1.500</p>
+                        <button class="add-to-cart" data-id="cafe1" data-name="Espresso" data-price="1500">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Cappuccino" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Cappuccino</h3>
+                        <p class="product-description">Equilibrio perfecto entre espresso, leche y espuma cremosa.</p>
+                        <p class="product-price">$2.200</p>
+                        <button class="add-to-cart" data-id="cafe2" data-name="Cappuccino" data-price="2200">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Latte" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Latte</h3>
+                        <p class="product-description">Espresso con abundante leche cremosa y un toque de espuma.</p>
+                        <p class="product-price">$2.300</p>
+                        <button class="add-to-cart" data-id="cafe3" data-name="Latte" data-price="2300">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Moka" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Moka</h3>
+                        <p class="product-description">Deliciosa mezcla de café, chocolate y leche que endulzará tu día.</p>
+                        <p class="product-price">$2.500</p>
+                        <button class="add-to-cart" data-id="cafe4" data-name="Moka" data-price="2500">Añadir al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Postres Section -->
+        <section id="postres" class="menu-section">
+            <h2 class="section-title">Postres</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Cheesecake" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Cheesecake</h3>
+                        <p class="product-description">Suave pastel de queso con base de galleta y cobertura de frutos rojos.</p>
+                        <p class="product-price">$3.200</p>
+                        <button class="add-to-cart" data-id="postre1" data-name="Cheesecake" data-price="3200">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Brownie" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Brownie</h3>
+                        <p class="product-description">Clásico brownie de chocolate con nueces, ideal para los amantes del cacao.</p>
+                        <p class="product-price">$2.800</p>
+                        <button class="add-to-cart" data-id="postre2" data-name="Brownie" data-price="2800">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Tiramisú" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Tiramisú</h3>
+                        <p class="product-description">Postre italiano con capas de bizcocho empapado en café y crema de mascarpone.</p>
+                        <p class="product-price">$3.500</p>
+                        <button class="add-to-cart" data-id="postre3" data-name="Tiramisú" data-price="3500">Añadir al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Bebidas Frías Section -->
+        <section id="bebidas" class="menu-section">
+            <h2 class="section-title">Bebidas Frías</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Frappuccino" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Frappuccino</h3>
+                        <p class="product-description">Bebida refrescante de café batido con hielo y crema batida.</p>
+                        <p class="product-price">$3.000</p>
+                        <button class="add-to-cart" data-id="bebida1" data-name="Frappuccino" data-price="3000">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Limonada" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Limonada</h3>
+                        <p class="product-description">Refrescante limonada casera con un toque de menta.</p>
+                        <p class="product-price">$2.000</p>
+                        <button class="add-to-cart" data-id="bebida2" data-name="Limonada" data-price="2000">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Cold Brew" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Cold Brew</h3>
+                        <p class="product-description">Café preparado en frío durante 24 horas, suave y refrescante.</p>
+                        <p class="product-price">$2.700</p>
+                        <button class="add-to-cart" data-id="bebida3" data-name="Cold Brew" data-price="2700">Añadir al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Snacks Section -->
+        <section id="snacks" class="menu-section">
+            <h2 class="section-title">Snacks</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Sandwich Club" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Sandwich Club</h3>
+                        <p class="product-description">Sandwich triple con pollo, tocino, huevo, tomate y lechuga.</p>
+                        <p class="product-price">$4.200</p>
+                        <button class="add-to-cart" data-id="snack1" data-name="Sandwich Club" data-price="4200">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Croissant" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Croissant</h3>
+                        <p class="product-description">Auténtico croissant francés, ligero y con múltiples capas.</p>
+                        <p class="product-price">$1.800</p>
+                        <button class="add-to-cart" data-id="snack2" data-name="Croissant" data-price="1800">Añadir al Carrito</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <img src="/api/placeholder/400/320" alt="Empanada" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">Empanada</h3>
+                        <p class="product-description">Empanada de pino tradicional, perfecta para acompañar tu café.</p>
+                        <p class="product-price">$2.500</p>
+                        <button class="add-to-cart" data-id="snack3" data-name="Empanada" data-price="2500">Añadir al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeCart">&times;</span>
+            <div class="modal-header">
+                <h2>Tu Carrito</h2>
+            </div>
+            <div class="modal-body">
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be dynamically added here -->
+                </div>
+                <div class="cart-total">
+                    Total: <span id="cartTotal">$0</span>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn">Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closePayment">&times;</span>
+            <div class="modal-header">
+                <h2>Pago</h2>
+            </div>
+            <div class="modal-body">
+                <form class="payment-form" id="paymentForm">
+                    <div class="form-group">
+                        <label for="cardName">Nombre en la tarjeta</label>
+                        <input type="text" id="cardName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardNumber">Número de tarjeta</label>
+                        <input type="text" id="cardNumber" placeholder="XXXX XXXX XXXX XXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardExpiry">Fecha de vencimiento</label>
+                        <input type="text" id="cardExpiry" placeholder="MM/AA" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardCVV">CVV</label>
+                        <input type="text" id="cardCVV" placeholder="XXX" required>
+                    </div>
+                    <button type="submit" class="pay-btn">Pagar <span id="paymentTotal">$0</span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>¡Pago Exitoso!</h2>
+            </div>
+            <div class="modal-body">
+                <div class="success-message">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Gracias por tu compra</h3>
+                    <p>Tu pedido ha sido procesado correctamente.</p>
+                    <button class="checkout-btn" id="closeSuccess">Continuar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cart data
+            let cart = [];
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const paymentTotal = document.getElementById('paymentTotal');
+            
+            // Modals
+            const cartModal = document.getElementById('cartModal');
+            const paymentModal = document.getElementById('paymentModal');
+            const successModal = document.getElementById('successModal');
+            
+            // Buttons
+            const openCartBtn = document.getElementById('openCart');
+            const closeCartBtn = document.getElementById('closeCart');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const closePaymentBtn = document.getElementById('closePayment');
+            const closeSuccessBtn = document.getElementById('closeSuccess');
+            const paymentForm = document.getElementById('paymentForm');
+            
+            // Add product to cart
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    const name = this.dataset.name;
+                    const price = parseInt(this.dataset.price);
+                    
+                    // Check if product is already in cart
+                    const existingItem = cart.find(item => item.id === id);
+                    
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({
+                            id: id,
+                            name: name,
+                            price: price,
+                            quantity: 1
+                        });
+                    }
+                    
+                    updateCart();
+                    
+                    // Show notification
+                    alert(`${name} agregado al carrito`);
+                });
+            });
+            
+            // Open cart modal
+            openCartBtn.addEventListener('click', function() {
+                updateCartDisplay();
+                cartModal.style.display = 'flex';
+            });
+            
+            // Close cart modal
+            closeCartBtn.addEventListener('click', function() {
+                cartModal.style.display = 'none';
+            });
+            
+            // Proceed to checkout
+            checkoutBtn.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Tu carrito está vacío');
+                    return;
+                }
+                
+                cartModal.style.display = 'none';
+                updatePaymentTotal();
+                paymentModal.style.display = 'flex';
+            });
+            
+            // Close payment modal
+            closePaymentBtn.addEventListener('click', function() {
+                paymentModal.style.display = 'none';
+                cartModal.style.display = 'flex';
+            });
+            
+            // Submit payment
+            paymentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate payment processing
+                paymentModal.style.display = 'none';
+                successModal.style.display = 'flex';
+                
+                // Clear cart after successful payment
+                cart = [];
+                updateCart();
+            });
+            
+            // Close success modal
+            closeSuccessBtn.addEventListener('click', function() {
+                successModal.style.display = 'none';
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === cartModal) {
+                    cartModal.style.display = 'none';
+                } else if (event.target === paymentModal) {
+                    paymentModal.style.display = 'none';
+                } else if (event.target === successModal) {
+                    successModal.style.display = 'none';
+                }
+            });
+            
+            // Update cart count and total
+            function updateCart() {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                cartCount.textContent = totalItems;
+            }
+            
+            // Update cart display in modal
+            function updateCartDisplay() {
+                cartItems.innerHTML = '';
+                
+                if (cart.length === 0) {
+                    cartItems.innerHTML = '<p>Tu carrito está vacío</p>';
+                    cartTotal.textContent = '$0';
+                    return;
+                }
+                
+                let total = 0;
+                
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('cart-item');
+                    cartItem.innerHTML = `
+                        <div class="item-details">
+                            <span class="item-title">${item.name}</span>
+                            <span class="item-price">$${item.price.toLocaleString()}</span>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="quantity-
