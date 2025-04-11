@@ -1,4 +1,4 @@
-Cafetería Don Gato - Aplicación web
+Cafetería Don Gato
 Aplicación web responsiva desarrollada para Cafetería Don Gato, que permite visualizar productos, simular un carrito de compras y realizar pagos simulados.
 
 
